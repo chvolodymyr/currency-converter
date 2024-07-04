@@ -1,0 +1,24 @@
+<mat-card>
+  <app-header></app-header>
+  <mat-card-content>
+    <form class="converter" [formGroup]="converterFrom">
+      <app-currency-selector
+        formControlName="baseCurrency"
+        [codes]="[
+          { code: 'UAH', country: 'Ukraine' },
+          { code: 'USD', country: 'Ubited' }
+        ]"
+      ></app-currency-selector>
+      <button (click)="reverse()" mat-mini-fab class="converter__button">
+        <mat-icon>sync-alt</mat-icon>
+      </button>
+      <app-currency-selector
+        formControlName="targetCurrency"
+        [codes]="[
+          { code: 'UAH', country: 'Ukraine' },
+          { code: 'USD', country: 'Ubited' }
+        ]"
+      ></app-currency-selector>
+    </form>
+  </mat-card-content>
+</mat-card>
