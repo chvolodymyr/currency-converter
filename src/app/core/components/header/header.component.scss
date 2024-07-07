@@ -1,0 +1,16 @@
+:host {
+  margin-bottom: 40px;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  .currency-rates {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .currency {
+    font-weight: bold;
+  }
+}

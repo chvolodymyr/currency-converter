@@ -1,64 +1,33 @@
-import { NgFor } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, Injector, input, output } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { Subscription } from 'rxjs';
+import { ICode } from '@core/interfaces';
 
 @Component({
   selector: 'app-currency-selector',
   standalone: true,
-  imports: [
-    NgFor,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
+  imports: [MatSelectModule, MatFormFieldModule, MatInputModule],
   templateUrl: './currency-selector.component.html',
   styleUrl: './currency-selector.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: CurrencySelectorComponent,
-      multi: true,
-    },
-  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CurrencySelectorComponent implements ControlValueAccessor {
-  public codes = input.required<{ code: string; country: string }[]>();
+export class CurrencySelectorComponent {
+  public injector = inject(Injector);
 
-  onTouched: Function = () => {};
-  onChangeSubs: Subscription[] = [];
+  public amount = input.required<string>();
+  public code = input.required<string>();
 
-  public form: FormGroup = inject(FormBuilder).group({
-    amount: [0, [Validators.required, Validators.min(0)]],
-    selectedCurrency: ['', [Validators.required]],
-  });
+  public selectedCodeChange = output<string>();
+  public amountChange = output<string>();
 
-  writeValue(obj: any): void {
-    this.form.setValue(obj);
+  public codes = input.required<ICode[]>();
+
+  public onAmountChange(value: string) {
+    this.amountChange.emit(value);
   }
 
-  registerOnChange(onChange: any): void {
-    const sub = this.form.valueChanges.subscribe(onChange);
-
-    this.onChangeSubs.push(sub);
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
+  public onSelectChange(e: { value: string }) {
+    this.selectedCodeChange.emit(e.value);
   }
 }

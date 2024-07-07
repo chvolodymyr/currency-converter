@@ -1,16 +1,13 @@
-<div class="currency-selector" [formGroup]="form">
+<div class="currency-selector">
   <mat-form-field>
     <mat-label>Amount</mat-label>
-    <input matInput type="number" formControlName="amount" />
+    <input matInput #amountInput type="number" [value]="amount()" (input)="onAmountChange(amountInput.value)" />
   </mat-form-field>
   <mat-form-field>
     <mat-label>Currency</mat-label>
-
-    <mat-select formControlName="selectedCurrency" [placeholder]="'Select '">
+    <mat-select [value]="code()" (selectionChange)="onSelectChange($event)" [placeholder]="'Select'">
       @for (item of codes(); track $index) {
-      <mat-option [value]="item.code">
-        {{ item.code }} - {{ item.country }}
-      </mat-option>
+        <mat-option [value]="item.code"> {{ item.code }} - {{ item.country }} </mat-option>
       }
     </mat-select>
   </mat-form-field>

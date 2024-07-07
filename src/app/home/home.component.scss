@@ -16,3 +16,22 @@
     margin-bottom: 15px;
   }
 }
+
+.currency-conversion {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  margin: 20px auto;
+  color: #333;
+  display: flex;
+  font-size: 1.3em;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  .amount {
+    font-weight: bold;
+    margin: 0;
+  }
+}

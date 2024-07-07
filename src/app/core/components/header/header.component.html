@@ -1,0 +1,10 @@
+<mat-card-header class="container">
+  <mat-card-title>Currency Converter</mat-card-title>
+  <mat-card-subtitle>
+    <div class="currency-rates">
+      @for (item of rates(); track $index) {
+        <span class="currency">{{ item.rate | currency: item.code : 'symbol-narrow' }}</span>
+      }
+    </div>
+  </mat-card-subtitle>
+</mat-card-header>
