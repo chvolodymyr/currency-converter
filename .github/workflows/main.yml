@@ -21,14 +21,20 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install dependencies
+        run: npm run prebuild
+
       - name: Set environment variables
-        run: echo "API_KEY=${{ secrets.API_KEY }} OTHER_SECRET=${{ secrets.OTHER_SECRET }}" >> $GITHUB_ENV
+        run: |
+          echo "API_KEY=${{ secrets.API_KEY }}" >> $GITHUB_ENV
+          echo "API_URL=${{ secrets.API_URL }}" >> $GITHUB_ENV
 
       - name: Build project
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/your-project-name
+          branch: gh-pages 
+          folder: dist/currency-converter/browser
+          token: ${{ secrets.GT_TOKEN }}
